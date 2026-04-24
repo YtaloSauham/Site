@@ -1455,9 +1455,16 @@
   }
 
   // ─── RESIZE HANDLER ───────────────────────────────────────
+  function getCanvasDPR() {
+    return window.matchMedia('(pointer: coarse), (max-width: 768px)').matches
+      ? 1
+      : (window.devicePixelRatio || 1);
+  }
+
   function resizeCanvas(canvas) {
-    canvas.width  = canvas.offsetWidth  * (window.devicePixelRatio || 1);
-    canvas.height = canvas.offsetHeight * (window.devicePixelRatio || 1);
+    const dpr = getCanvasDPR();
+    canvas.width  = canvas.offsetWidth  * dpr;
+    canvas.height = canvas.offsetHeight * dpr;
   }
 
   // ─── CRIA ENGINE DE FRAME SEQUENCE ────────────────────────
@@ -1583,9 +1590,11 @@
       .to('#hero-tagline', { opacity: 1, y: 0, duration: 1,   ease: 'power3.out' }, '-=0.5')
       .to('#hero-cta',     { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, '-=0.4');
 
+    const isMobileDevice = window.matchMedia('(pointer: coarse), (max-width: 768px)').matches;
+
     // ── SCROLL SPACE ───────────────────────────────────────
-    // Cada cena tem 1.5 viewports de espaço de scroll para ser mais ágil
-    const V_SCRUB_PX = window.innerHeight * 1.5;
+    // Cada cena tem menos espaço em mobile para reduzir carga
+    const V_SCRUB_PX = window.innerHeight * (isMobileDevice ? 1 : 1.5);
 
     // Define o height real das seções de frame (não as sticky internas)
     // A seção precisa ter height = 100vh (viewport) + V_SCRUB_PX
@@ -1595,7 +1604,7 @@
     scene2.style.height = (window.innerHeight + V_SCRUB_PX) + 'px';
 
     window.addEventListener('resize', () => {
-      const newScrub = window.innerHeight * 1.5;
+      const newScrub = window.innerHeight * (isMobileDevice ? 1 : 1.5);
       scene1.style.height = (window.innerHeight + newScrub) + 'px';
       scene2.style.height = (window.innerHeight + newScrub) + 'px';
       ScrollTrigger.refresh();
@@ -1621,7 +1630,7 @@
         trigger: '#frame-scene-1',
         start: 'top top',
         end: '+=' + V_SCRUB_PX,
-        scrub: 0.08,
+        scrub: isMobileDevice ? 0.2 : 0.08,
       },
       onUpdate() { engine1.setProgress(scene1Progress.progress); }
     });
@@ -1632,7 +1641,7 @@
         trigger: '#frame-scene-1',
         start: 'top top',
         end: '+=' + V_SCRUB_PX,
-        scrub: 1.5,
+        scrub: isMobileDevice ? 0.4 : 1.5,
       }
     });
 
@@ -1652,7 +1661,7 @@
         trigger: '#frame-scene-2',
         start: 'top top',
         end: '+=' + V_SCRUB_PX,
-        scrub: 0.08,
+        scrub: isMobileDevice ? 0.2 : 0.08,
       },
       onUpdate() { engine2.setProgress(scene2Progress.progress); }
     });
@@ -1663,7 +1672,7 @@
         trigger: '#frame-scene-2',
         start: 'top top',
         end: '+=' + V_SCRUB_PX,
-        scrub: 1,
+        scrub: isMobileDevice ? 0.4 : 1,
       }
     });
 
