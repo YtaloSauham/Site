@@ -1,0 +1,1728 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ytalo & Ariane · 2025</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Great+Vibes&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── Design Tokens ──────────────────────────────────────── */
+    :root {
+      --bg:        #E8E2D6;
+      --bg2:       #D6CBB7;
+      --olive:     #5A6242;
+      --olive-lt:  #7A8560;
+      --gold:      #C9A84C;
+      --gold-lt:   #E8C97A;
+      --cream:     #F5F0E8;
+      --ink:       #2C2A26;
+      --ink-lt:    #6B6557;
+      --white:     #FDFAF5;
+
+      --serif:     'Playfair Display', Georgia, serif;
+      --body:      'Cormorant Garamond', Georgia, serif;
+      --script:    'Great Vibes', cursive;
+
+      --ease-silk: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: auto; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--body);
+      font-size: clamp(16px, 1.2vw, 20px);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
+    }
+
+    /* ─── Scrollbar ──────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg2); }
+    ::-webkit-scrollbar-thumb { background: var(--olive); border-radius: 2px; }
+
+    /* ─── Cursor ─────────────────────────────────────────────── */
+    .cursor {
+      position: fixed;
+      width: 10px; height: 10px;
+      background: var(--olive);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 10000;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s, width 0.3s var(--ease-silk), height 0.3s var(--ease-silk), background 0.3s;
+      mix-blend-mode: multiply;
+    }
+    .cursor-ring {
+      position: fixed;
+      width: 36px; height: 36px;
+      border: 1px solid var(--olive);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.15s var(--ease-silk), width 0.4s var(--ease-silk), height 0.4s var(--ease-silk), opacity 0.4s;
+      opacity: 0.5;
+    }
+
+    /* ─── Nav ────────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 28px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    nav::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(232,226,214,0.85) 0%, transparent 100%);
+      pointer-events: none;
+    }
+    .nav-monogram {
+      font-family: var(--script);
+      font-size: 2rem;
+      color: var(--olive);
+      letter-spacing: 0.02em;
+      position: relative;
+    }
+    .nav-date {
+      font-family: var(--body);
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--ink-lt);
+      position: relative;
+    }
+
+    /* ─── Progress bar ───────────────────────────────────────── */
+    #progress-bar {
+      position: fixed;
+      top: 0; left: 0;
+      height: 2px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--olive), var(--gold));
+      z-index: 10001;
+      transition: width 0.1s linear;
+    }
+
+    /* ─── Section Shared ─────────────────────────────────────── */
+    .section {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    /* ─── FRAME SCENE ───────────────────────────────────────── */
+    .frame-scene {
+      overflow: visible;
+    }
+
+    /* ─── HERO SECTION ───────────────────────────────────────── */
+    #hero {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg);
+    }
+
+    .hero-bg-text {
+      position: absolute;
+      font-family: var(--script);
+      font-size: clamp(80px, 14vw, 200px);
+      color: rgba(90, 98, 66, 0.06);
+      white-space: nowrap;
+      user-select: none;
+      pointer-events: none;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-content {
+      text-align: center;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--body);
+      font-size: 0.7rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--olive);
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .hero-names {
+      font-family: var(--script);
+      font-size: clamp(52px, 8vw, 120px);
+      color: var(--ink);
+      line-height: 1;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .hero-ampersand { color: var(--olive); }
+
+    .hero-divider {
+      width: 80px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0;
+    }
+
+    .hero-tagline {
+      font-family: var(--body);
+      font-style: italic;
+      font-size: clamp(1rem, 2vw, 1.35rem);
+      color: var(--ink-lt);
+      letter-spacing: 0.05em;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .hero-cta {
+      margin-top: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .hero-cta span {
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--olive-lt);
+    }
+
+    .scroll-indicator { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    .scroll-indicator-line {
+      width: 1px; height: 50px;
+      background: linear-gradient(to bottom, transparent, var(--olive));
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
+      50% { opacity: 1; transform: scaleY(1); }
+    }
+
+    /* ─── FRAME SEQUENCE SCENE ───────────────────────────────── */
+    .frame-scene {
+      /* The section itself is just a scroll-space container */
+      /* The inner sticky wrapper does the real work */
+    }
+
+    .frame-scene-sticky {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      background: var(--bg);
+    }
+
+    /* Canvas element for frame rendering */
+    .frame-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      /* canvas fills the full area; we draw centered/cover in JS */
+    }
+
+    /* Light vignette over frame canvas */
+    .frame-vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center,
+        transparent 40%,
+        rgba(232,226,214,0.35) 70%,
+        rgba(232,226,214,0.82) 100%
+      );
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* ─── OVERLAY CONTENT (over frame scene 1) ───────────────── */
+    #overlay-content {
+      position: absolute;
+      inset: 0;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    .overlay-inner {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      max-width: 680px;
+      padding: 0 24px;
+    }
+
+    .overlay-eyebrow {
+      font-family: var(--body);
+      font-size: 0.68rem;
+      letter-spacing: 0.42em;
+      text-transform: uppercase;
+      color: var(--olive);
+      opacity: 0;
+      transform: translateY(14px);
+    }
+
+    .overlay-names {
+      font-family: var(--script);
+      font-size: clamp(56px, 9vw, 130px);
+      color: var(--ink);
+      line-height: 0.95;
+      opacity: 0;
+      transform: translateY(22px);
+      text-shadow: 0 2px 40px rgba(232,226,214,0.8);
+    }
+
+    .overlay-divider {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      width: 240px;
+      opacity: 0;
+    }
+    .overlay-divider-line {
+      flex: 1; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold));
+    }
+    .overlay-divider-line:last-child {
+      background: linear-gradient(90deg, var(--gold), transparent);
+    }
+    .overlay-divider-diamond {
+      width: 5px; height: 5px;
+      background: var(--gold);
+      transform: rotate(45deg);
+      flex-shrink: 0;
+    }
+
+    .overlay-tagline {
+      font-family: var(--body);
+      font-style: italic;
+      font-size: clamp(1rem, 2vw, 1.3rem);
+      color: var(--ink-lt);
+      line-height: 1.6;
+      opacity: 0;
+      transform: translateY(14px);
+    }
+
+    .overlay-details {
+      display: flex;
+      gap: 40px;
+      opacity: 0;
+      transform: translateY(14px);
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .overlay-detail-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .overlay-detail-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--olive);
+    }
+
+    .overlay-detail-value {
+      font-family: var(--serif);
+      font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    /* ─── Scene 2 overlay ────────────────────────────────────── */
+    .scene2-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 5;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 80px;
+      pointer-events: none;
+    }
+
+    .scene2-text {
+      text-align: center;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .scene2-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--olive);
+      margin-bottom: 10px;
+    }
+
+    .scene2-title {
+      font-family: var(--script);
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      color: var(--ink);
+    }
+
+    /* ─── INTERLUDE ──────────────────────────────────────────── */
+    #interlude {
+      min-height: 80vh;
+      background: var(--bg2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 40px;
+    }
+
+    .interlude-inner {
+      max-width: 760px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .interlude-quote-mark {
+      font-family: var(--script);
+      font-size: 5rem;
+      line-height: 0.5;
+      color: var(--olive);
+      opacity: 0.35;
+    }
+
+    .interlude-quote {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: clamp(1.4rem, 3vw, 2.2rem);
+      color: var(--ink);
+      line-height: 1.55;
+      letter-spacing: 0.015em;
+    }
+
+    .interlude-attribution {
+      font-size: 0.72rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--olive-lt);
+    }
+
+    .interlude-names-script {
+      font-family: var(--script);
+      font-size: 2.2rem;
+      color: var(--olive);
+      margin-top: 8px;
+    }
+
+    /* ─── DETAILS SECTION ────────────────────────────────────── */
+    #details {
+      background: var(--bg);
+      padding: 120px 48px;
+    }
+
+    .details-intro {
+      max-width: 860px;
+      margin: 0 auto 56px;
+      text-align: center;
+      padding: 0 24px;
+    }
+
+    .details-intro .section-label {
+      letter-spacing: 0.35em;
+      color: var(--olive);
+      margin-bottom: 12px;
+      display: inline-block;
+    }
+
+    .details-title {
+      font-family: var(--script);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      color: var(--ink);
+      line-height: 1.05;
+      margin-top: 8px;
+    }
+
+    .details-copy {
+      margin-top: 18px;
+      color: var(--ink-lt);
+      font-family: var(--body);
+      font-size: clamp(1rem, 1.5vw, 1.15rem);
+      line-height: 1.8;
+    }
+
+    .details-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1px 1fr 1px 1fr;
+      gap: 0;
+      align-items: start;
+    }
+
+    .details-divider-v {
+      width: 1px;
+      height: 100%;
+      min-height: 200px;
+      background: linear-gradient(to bottom, transparent, var(--gold-lt), transparent);
+      align-self: stretch;
+    }
+
+    .detail-block {
+      padding: 40px 48px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .detail-icon {
+      width: 44px; height: 44px;
+      border: 1px solid var(--gold-lt);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--olive);
+      font-size: 1.1rem;
+    }
+
+    .detail-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--olive-lt);
+    }
+
+    .detail-value {
+      font-family: var(--serif);
+      font-size: clamp(1.1rem, 2vw, 1.4rem);
+      color: var(--ink);
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    .detail-sub {
+      font-family: var(--body);
+      font-style: italic;
+      font-size: 0.9rem;
+      color: var(--ink-lt);
+    }
+
+    /* ─── GALLERY STRIP ──────────────────────────────────────── */
+    #gallery {
+      overflow: hidden;
+      background: var(--bg2);
+      padding: 80px 0;
+    }
+
+    .gallery-header {
+      text-align: center;
+      padding: 0 40px 60px;
+    }
+
+    .section-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--olive);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: var(--script);
+      font-size: clamp(2.5rem, 5vw, 5rem);
+      color: var(--ink);
+      line-height: 1.1;
+    }
+
+    .marquee-track {
+      display: flex;
+      gap: 24px;
+      width: max-content;
+      animation: marquee 28s linear infinite;
+    }
+    .marquee-track:hover { animation-play-state: paused; }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    .marquee-item {
+      width: 280px; height: 200px;
+      border-radius: 4px;
+      overflow: hidden;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .marquee-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: sepia(20%) saturate(0.9);
+      transition: filter 0.5s;
+    }
+    .marquee-item:hover img { filter: sepia(0%) saturate(1); }
+
+    /* ─── RSVP SECTION ───────────────────────────────────────── */
+    #rsvp {
+      background: var(--olive);
+      padding: 120px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #rsvp::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 60% 40%, rgba(201,168,76,0.15) 0%, transparent 60%);
+    }
+
+    .rsvp-inner {
+      max-width: 640px;
+      margin: 0 auto;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .rsvp-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+    }
+
+    .rsvp-title {
+      font-family: var(--script);
+      font-size: clamp(3rem, 6vw, 6rem);
+      color: var(--white);
+      line-height: 1;
+    }
+
+    .rsvp-sub {
+      font-family: var(--body);
+      font-style: italic;
+      font-size: 1.15rem;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.6;
+    }
+
+    .rsvp-deadline {
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold-lt);
+    }
+
+    .btn-rsvp {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 48px;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.45);
+      color: var(--white);
+      font-family: var(--body);
+      font-size: 0.8rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.4s, border-color 0.4s, transform 0.3s var(--ease-silk);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-rsvp::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.08);
+      transform: translateX(-100%);
+      transition: transform 0.4s var(--ease-silk);
+    }
+
+    .btn-rsvp:hover::before { transform: translateX(0); }
+    .btn-rsvp:hover { border-color: rgba(255,255,255,0.8); transform: translateY(-2px); }
+
+    /* ─── FOOTER ─────────────────────────────────────────────── */
+    footer {
+      background: var(--ink);
+      padding: 60px 48px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .footer-monogram {
+      font-family: var(--script);
+      font-size: 3.5rem;
+      color: var(--gold);
+    }
+
+    .footer-text {
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+    }
+
+    /* ─── SCROLL HINT FADE ───────────────────────────────────── */
+    .fade-in-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s var(--ease-silk), transform 0.8s var(--ease-silk);
+    }
+    .fade-in-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── LIGHT LEAK ─────────────────────────────────────────── */
+    .light-leak {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      filter: blur(80px);
+    }
+
+    /* ─── DRESS CODE SECTION ─────────────────────────────────── */
+    #dress-code {
+      background: var(--cream);
+      padding: 120px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #dress-code::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 10% 80%, rgba(90,98,66,0.06) 0%, transparent 50%),
+        radial-gradient(ellipse at 90% 20%, rgba(201,168,76,0.08) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .dress-code-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .dress-code-header {
+      text-align: center;
+      margin-bottom: 72px;
+    }
+
+    .dress-code-header .section-label { margin-bottom: 12px; }
+
+    .dress-code-subtitle {
+      font-family: var(--body);
+      font-style: italic;
+      font-size: clamp(1rem, 1.8vw, 1.25rem);
+      color: var(--ink-lt);
+      margin-top: 16px;
+      letter-spacing: 0.02em;
+    }
+
+    .dress-code-palette {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin: 36px auto 0;
+      flex-wrap: wrap;
+    }
+
+    .palette-swatch { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+
+    .swatch-circle {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      border: 1px solid rgba(44,42,38,0.12);
+      transition: transform 0.3s var(--ease-silk), box-shadow 0.3s;
+    }
+    .swatch-circle:hover { transform: scale(1.1); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+
+    .swatch-name {
+      font-size: 0.55rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-lt);
+      text-align: center;
+      max-width: 60px;
+    }
+
+    .dress-code-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+    }
+
+    .dress-card {
+      background: var(--bg);
+      padding: 56px 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.4s;
+    }
+
+    .dress-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .dress-card:hover::before { opacity: 1; }
+    .dress-card:hover { background: var(--cream); }
+
+    .dress-card-icon {
+      width: 52px; height: 52px;
+      border: 1px solid var(--gold-lt);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--olive);
+    }
+
+    .dress-card-label { font-size: 0.6rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--olive); }
+
+    .dress-card-title {
+      font-family: var(--serif);
+      font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+      color: var(--ink);
+      font-weight: 500;
+      line-height: 1.2;
+    }
+
+    .dress-card-desc {
+      font-family: var(--body);
+      font-style: italic;
+      font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+      color: var(--ink-lt);
+      line-height: 1.75;
+    }
+
+    .dress-card-items {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .dress-card-items li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: clamp(0.85rem, 1.3vw, 1rem);
+      color: var(--ink);
+      line-height: 1.5;
+    }
+
+    .dress-card-items li::before {
+      content: '';
+      width: 4px; height: 4px;
+      background: var(--gold);
+      border-radius: 50%;
+      margin-top: 8px;
+      flex-shrink: 0;
+    }
+
+    .dress-avoid {
+      padding: 20px 24px;
+      border: 1px solid rgba(90,98,66,0.2);
+      background: rgba(90,98,66,0.03);
+      border-radius: 2px;
+    }
+
+    .dress-avoid-label { font-size: 0.58rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--ink-lt); margin-bottom: 8px; }
+
+    .dress-avoid-text { font-size: clamp(0.82rem, 1.2vw, 0.95rem); color: var(--ink-lt); font-style: italic; line-height: 1.6; }
+
+    .dress-note {
+      margin-top: 60px;
+      text-align: center;
+      padding: 36px 48px;
+      border-top: 1px solid rgba(201,168,76,0.3);
+      border-bottom: 1px solid rgba(201,168,76,0.3);
+    }
+
+    .dress-note-script { font-family: var(--script); font-size: clamp(1.6rem, 3vw, 2.5rem); color: var(--olive); line-height: 1.2; }
+
+    .dress-note-text { margin-top: 12px; font-size: 0.82rem; color: var(--ink-lt); font-style: italic; letter-spacing: 0.04em; }
+
+    /* ─── Loading screen ─────────────────────────────────────── */
+    #loading-screen {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      z-index: 20000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      transition: opacity 0.8s var(--ease-silk), visibility 0.8s;
+    }
+    #loading-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .loading-monogram {
+      font-family: var(--script);
+      font-size: 4rem;
+      color: var(--olive);
+      opacity: 0;
+      animation: loadFade 1s ease forwards 0.3s;
+    }
+
+    .loading-bar-track {
+      width: 200px;
+      height: 1px;
+      background: var(--bg2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .loading-bar-fill {
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      background: linear-gradient(90deg, var(--olive), var(--gold));
+      width: 0%;
+      transition: width 0.3s linear;
+    }
+
+    .loading-text {
+      font-size: 0.6rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--ink-lt);
+      opacity: 0;
+      animation: loadFade 1s ease forwards 0.5s;
+    }
+
+    @keyframes loadFade {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── RESPONSIVE ─────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+      #details { padding: 80px 24px; }
+      .details-grid { grid-template-columns: 1fr; gap: 0; }
+      .details-divider-v { display: none; }
+      .detail-block { padding: 32px 24px; border-bottom: 1px solid var(--bg2); }
+      .detail-block:last-child { border-bottom: none; }
+      #rsvp { padding: 80px 24px; }
+      footer { padding: 48px 24px; }
+      .overlay-details { gap: 24px; }
+      #dress-code { padding: 80px 24px; }
+      .dress-code-grid { grid-template-columns: 1fr; gap: 2px; }
+      .dress-card { padding: 40px 24px; }
+      .dress-note { padding: 28px 24px; }
+    }
+
+    /* ─── PREFERS REDUCED MOTION ─────────────────────────────── */
+    @media (prefers-reduced-motion: reduce) {
+      .scroll-indicator-line { animation: none; }
+      .marquee-track { animation: none; }
+      .cursor, .cursor-ring { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Loading Screen -->
+<div id="loading-screen">
+  <div class="loading-monogram">Y & A</div>
+  <div class="loading-bar-track">
+    <div class="loading-bar-fill" id="loading-fill"></div>
+  </div>
+  <div class="loading-text">Preparando sua experiência</div>
+</div>
+
+<!-- Progress bar -->
+<div id="progress-bar"></div>
+
+<!-- Custom cursor (desktop only) -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<!-- Navigation -->
+<nav>
+  <div class="nav-monogram">Y & A</div>
+  <div class="nav-date">12 · Julho · 2025</div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- HERO -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+ <section id="hero" class="section">
+  <div class="hero-bg-text" style="top:50%;left:50%;transform:translate(-50%,-50%)">Amor Eterno</div>
+  <div class="hero-content">
+    <div class="hero-eyebrow" id="hero-eyebrow">Convidam para celebrar</div>
+    <div class="hero-names" id="hero-names">
+      Ytalo <span class="hero-ampersand">&</span> Ariane
+    </div>
+    <div class="hero-divider" id="hero-divider"></div>
+    <div class="hero-tagline" id="hero-tagline">
+      "O amor é a única flor que cresce e floresce<br/>sem a ajuda das estações"
+    </div>
+    <div class="hero-cta" id="hero-cta">
+      <div class="scroll-indicator">
+        <span>Role para descobrir</span>
+        <div class="scroll-indicator-line"></div>
+      </div>
+    </div>
+  </div>
+</section> 
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- FRAME SCENE 1 – Alianças se separando -->
+<!-- ESTRUTURA: a seção tem height grande (scroll space)
+     o sticky wrapper fica fixo enquanto rola -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="frame-scene-1" class="section frame-scene">
+  <div class="frame-scene-sticky" id="sticky-1">
+    <canvas class="frame-canvas" id="canvas1"></canvas>
+    <div class="frame-vignette"></div>
+    <div class="light-leak" style="width:500px;height:500px;background:rgba(201,168,76,0.08);top:50%;left:50%;transform:translate(-50%,-50%);"></div>
+
+    <!-- Overlay central com texto -->
+    <div id="overlay-content">
+      <div class="overlay-inner">
+        <div class="overlay-eyebrow" id="ov-eyebrow">12 de Julho de 2025</div>
+        <div class="overlay-names" id="ov-names">
+          Ytalo <span style="color:var(--olive)">&</span> Ariane
+        </div>
+        <div class="overlay-divider" id="ov-divider">
+          <div class="overlay-divider-line"></div>
+          <div class="overlay-divider-diamond"></div>
+          <div class="overlay-divider-line"></div>
+        </div>
+        <div class="overlay-tagline" id="ov-tagline">
+          Dois corações, uma história, uma vida.<br/>
+          Venha celebrar conosco este momento único.
+        </div>
+        <div class="overlay-details" id="ov-details">
+          <div class="overlay-detail-item">
+            <div class="overlay-detail-label">Cerimônia</div>
+            <div class="overlay-detail-value">18h00</div>
+          </div>
+          <div class="overlay-detail-item">
+            <div class="overlay-detail-label">Local</div>
+            <div class="overlay-detail-value">Igreja São Francisco</div>
+          </div>
+          <div class="overlay-detail-item">
+            <div class="overlay-detail-label">Recepção</div>
+            <div class="overlay-detail-value">Villa Garden · 20h</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- INTERLUDE -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="interlude" class="section">
+  <div class="interlude-inner">
+    <div class="interlude-quote-mark fade-in-up">"</div>
+    <blockquote class="interlude-quote fade-in-up">
+      Amar não é olhar um para o outro,<br/>
+      é olhar juntos na mesma direção.
+    </blockquote>
+    <div class="interlude-attribution fade-in-up">Antoine de Saint-Exupéry</div>
+    <div class="interlude-names-script fade-in-up">Ytalo & Ariane</div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- DETAILS -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="details" class="section">
+  <div class="details-intro fade-in-up visible">
+    <div class="section-label">Informações</div>
+    <h2 class="details-title">Tudo o que você precisa saber</h2>
+    <p class="details-copy">Horário, local e recepção estão organizados para que você aproveite cada momento. Aqui estão os detalhes essenciais para chegar com calma e estilo ao grande dia.</p>
+  </div>
+  <div class="details-grid">
+    <div class="detail-block" id="db1">
+      <div class="detail-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+          <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/>
+          <line x1="3" y1="10" x2="21" y2="10"/>
+        </svg>
+      </div>
+      <div class="detail-label">Cerimônia</div>
+      <div class="detail-value">Sábado, 12 de Julho</div>
+      <div class="detail-sub">2025 · às 18h00</div>
+    </div>
+    <div class="details-divider-v"></div>
+    <div class="detail-block" id="db2">
+      <div class="detail-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+          <circle cx="12" cy="10" r="3"/>
+        </svg>
+      </div>
+      <div class="detail-label">Local</div>
+      <div class="detail-value">Igreja São Francisco</div>
+      <div class="detail-sub">São Luís, Maranhão</div>
+    </div>
+    <div class="details-divider-v"></div>
+    <div class="detail-block" id="db3">
+      <div class="detail-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+      </div>
+      <div class="detail-label">Recepção</div>
+      <div class="detail-value">Espaço Villa Garden</div>
+      <div class="detail-sub">A partir das 20h00</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- DRESS CODE -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="dress-code" class="section">
+  <div class="dress-code-inner">
+    <div class="dress-code-header fade-in-up">
+      <div class="section-label">Traje do Evento</div>
+      <div class="section-title">Recomendação de Traje</div>
+      <p class="dress-code-subtitle">Vistam-se para celebrar — com elegância, conforto e amor.</p>
+      <div class="dress-code-palette">
+        <div class="palette-swatch"><div class="swatch-circle" style="background:#E8E2D6;"></div><div class="swatch-name">Areia</div></div>
+        <div class="palette-swatch"><div class="swatch-circle" style="background:#C9A84C;"></div><div class="swatch-name">Dourado</div></div>
+        <div class="palette-swatch"><div class="swatch-circle" style="background:#5A6242;"></div><div class="swatch-name">Oliva</div></div>
+        <div class="palette-swatch"><div class="swatch-circle" style="background:#D4B896;"></div><div class="swatch-name">Champanhe</div></div>
+        <div class="palette-swatch"><div class="swatch-circle" style="background:#8B7355;"></div><div class="swatch-name">Caramelo</div></div>
+        <div class="palette-swatch"><div class="swatch-circle" style="background:#2C2A26;"></div><div class="swatch-name">Grafite</div></div>
+        <div class="palette-swatch"><div class="swatch-circle" style="background:#F5F0E8;"></div><div class="swatch-name">Creme</div></div>
+        <div class="palette-swatch"><div class="swatch-circle" style="background:#B8A898;"></div><div class="swatch-name">Rosé</div></div>
+      </div>
+    </div>
+    <div class="dress-code-grid fade-in-up">
+      <div class="dress-card">
+        <div class="dress-card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 2C9 2 7 4 7 7c0 2.5 1.5 4.5 3.5 5.3L9 22h6l-1.5-9.7C15.5 11.5 17 9.5 17 7c0-3-2-5-5-5z"/>
+          </svg>
+        </div>
+        <div class="dress-card-label">Para Elas</div>
+        <div class="dress-card-title">Traje Longo<br/>ou Midi</div>
+        <p class="dress-card-desc">Opte por vestidos fluidos que transmitam elegância e delicadeza. Tecidos leves como chiffon, crepe ou organza são bem-vindos para o calor de São Luís.</p>
+        <ul class="dress-card-items">
+          <li>Vestido longo ou midi em tons neutros, dourados ou oliva</li>
+          <li>Macacão elegante com detalhes refinados</li>
+          <li>Conjunto de saia longa + blusa sofisticada</li>
+          <li>Acessórios em tom dourado ou prata envelhecida</li>
+          <li>Salto fino, sandália de festa ou sapatilha elegante</li>
+        </ul>
+        <div class="dress-avoid">
+          <div class="dress-avoid-label">Por favor, evite</div>
+          <div class="dress-avoid-text">Branco, off-white e tons muito próximos ao vestido da noiva. Looks casuais como jeans, tênis ou chinelos.</div>
+        </div>
+      </div>
+      <div class="dress-card">
+        <div class="dress-card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+        <div class="dress-card-label">Para Eles</div>
+        <div class="dress-card-title">Traje Social<br/>ou Esporte Fino</div>
+        <p class="dress-card-desc">O padrão é social completo. Gravata é bem-vinda mas não obrigatória. Aposte em cores que complementem a paleta do evento com sobriedade e charme.</p>
+        <ul class="dress-card-items">
+          <li>Terno em grafite, azul-marinho, bege ou cáqui</li>
+          <li>Camisa social em tom neutro ou champanhe discreto</li>
+          <li>Esporte fino: calça social + blazer + camisa</li>
+          <li>Sapato social ou oxford em couro escuro</li>
+          <li>Gravata ou lenço de bolso em dourado ou oliva</li>
+        </ul>
+        <div class="dress-avoid">
+          <div class="dress-avoid-label">Por favor, evite</div>
+          <div class="dress-avoid-text">Looks completamente casuais, bermuda, chinelo ou camiseta. Cores muito vibrantes ou estampas chamativas.</div>
+        </div>
+      </div>
+    </div>
+    <div class="dress-note fade-in-up">
+      <div class="dress-note-script">Sintam-se à vontade para brilhar</div>
+      <p class="dress-note-text">A cerimônia acontece às 18h numa igreja histórica e a recepção no Espaço Villa Garden.<br/>Considere calçados confortáveis para a festa — vamos dançar muito!</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- GALLERY MARQUEE -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="gallery" class="section">
+  <div class="gallery-header fade-in-up">
+    <div class="section-label">Nossa história</div>
+    <div class="section-title">Momentos</div>
+  </div>
+  <div style="overflow:hidden;">
+    <div class="marquee-track" id="marquee">
+      <div class="marquee-item">
+        <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=560&q=80" alt="Casal em jardim florido" loading="lazy"/>
+      </div>
+      <div class="marquee-item">
+        <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=560&q=80" alt="Alianças de casamento douradas" loading="lazy"/>
+      </div>
+      <div class="marquee-item">
+        <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=560&q=80" alt="Casal dançando na recepção" loading="lazy"/>
+      </div>
+      <div class="marquee-item">
+        <img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?w=560&q=80" alt="Decoração floral elegante" loading="lazy"/>
+      </div>
+      <div class="marquee-item">
+        <img src="https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=560&q=80" alt="Bouquet de noiva" loading="lazy"/>
+      </div>
+      <div class="marquee-item">
+        <img src="https://images.unsplash.com/photo-1529636798458-92182e662485?w=560&q=80" alt="Mesa de recepção decorada" loading="lazy"/>
+      </div>
+      <!-- duplicate for seamless loop -->
+      <div class="marquee-item">
+        <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=560&q=80" alt="Casal em jardim florido" loading="lazy"/>
+      </div>
+      <div class="marquee-item">
+        <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=560&q=80" alt="Alianças de casamento douradas" loading="lazy"/>
+      </div>
+      <div class="marquee-item">
+        <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=560&q=80" alt="Casal dançando na recepção" loading="lazy"/>
+      </div>
+      <div class="marquee-item">
+        <img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?w=560&q=80" alt="Decoração floral elegante" loading="lazy"/>
+      </div>
+      <div class="marquee-item">
+        <img src="https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=560&q=80" alt="Bouquet de noiva" loading="lazy"/>
+      </div>
+      <div class="marquee-item">
+        <img src="https://images.unsplash.com/photo-1529636798458-92182e662485?w=560&q=80" alt="Mesa de recepção decorada" loading="lazy"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- RSVP -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="rsvp" class="section">
+  <div class="rsvp-inner">
+    <div class="rsvp-label fade-in-up">Confirme sua presença</div>
+    <div class="rsvp-title fade-in-up">Venha Celebrar</div>
+    <p class="rsvp-sub fade-in-up">
+      Sua presença é o maior presente que poderíamos receber.<br/>
+      Por favor, confirme até 28 de junho de 2025.
+    </p>
+    <div class="rsvp-deadline fade-in-up">Confirmar até · 28 Jun 2025</div>
+    <a href="https://wa.me/5598999999999?text=Ol%C3%A1!%20Confirmo%20minha%20presen%C3%A7a%20no%20casamento%20de%20Ytalo%20%26%20Ariane%20%F0%9F%A5%82"
+       class="btn-rsvp fade-in-up" target="_blank" rel="noopener">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      </svg>
+      Confirmar Presença
+    </a>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- FRAME SCENE 2 – Alianças se unindo -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="frame-scene-2" class="section frame-scene">
+  <div class="frame-scene-sticky" id="sticky-2">
+    <canvas class="frame-canvas" id="canvas2"></canvas>
+    <div class="frame-vignette"></div>
+    <div class="light-leak" style="width:500px;height:500px;background:rgba(201,168,76,0.08);top:50%;left:50%;transform:translate(-50%,-50%);"></div>
+
+    <div class="scene2-overlay">
+      <div class="scene2-text" id="scene2-text">
+        <div class="scene2-label">Juntos para sempre</div>
+        <div class="scene2-title">Unidos em Amor</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<!-- Footer -->
+<footer>
+  <div class="footer-monogram">Y & A</div>
+  <div class="footer-text">12 · Julho · 2025 · São Luís, Maranhão</div>
+  <div class="footer-text" style="margin-top:8px;font-size:0.6rem;opacity:0.5;">Com amor, Ytalo & Ariane</div>
+</footer>
+
+<!-- ─── Scripts ─────────────────────────────────────────────── -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<script>
+(function() {
+  'use strict';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // ─── CONFIGURAÇÃO DOS FRAMES ──────────────────────────────
+  //
+  // Os frames devem estar na mesma pasta que o HTML, nomeados:
+  //   video-intro_1.jpg  →  video-intro_31.jpg   (Cena 1 – alianças separando)
+  //
+  // A Cena 2 usa os mesmos frames em ordem reversa (31→1)
+  // para mostrar as alianças se unindo sem precisar de um
+  // segundo conjunto de arquivos.
+  //
+  // Se você tiver um conjunto separado para a cena 2, altere
+  // FRAMES_2_DIR, FRAMES_2_COUNT e FRAMES_2_BASE abaixo.
+
+  const TOTAL_FRAMES_1 = 21;               // video-intro_1 … video-intro_21
+  const TOTAL_FRAMES_2 = 35;               // video-final_1 … video-final_35
+  const FRAMES_1_DIR   = './image/';        // mesma pasta do HTML
+  const FRAMES_1_BASE  = 'video-intro_';    // prefixo dos arquivos
+  const FRAMES_1_EXT   = '.jpg';
+
+  const FRAMES_2_DIR   = './image/';
+  const FRAMES_2_BASE  = 'video-final_';
+  const FRAMES_2_EXT   = FRAMES_1_EXT;
+  const REVERSE_SCENE2 = false;  // false = usa a ordem natural do conjunto de cena 2
+
+  // ─── LOADING ──────────────────────────────────────────────
+  const loadingScreen = document.getElementById('loading-screen');
+  const loadingFill   = document.getElementById('loading-fill');
+  let loadPct = 0;
+
+  const loadTimer = setInterval(() => {
+    loadPct = Math.min(loadPct + Math.random() * 12, 90);
+    loadingFill.style.width = loadPct + '%';
+  }, 100);
+
+  function finishLoading() {
+    clearInterval(loadTimer);
+    loadingFill.style.width = '100%';
+    setTimeout(() => {
+      loadingScreen.classList.add('hidden');
+      initExperience();
+    }, 600);
+  }
+
+  // ─── PRÉ-CARREGA TODOS OS FRAMES ──────────────────────────
+  // Usa o cache nativo do browser: criamos <img> tags e
+  // guardamos as referências. Ao desenhar no canvas usamos
+  // as imagens já decodificadas — zero jank.
+
+  const frames1 = new Array(TOTAL_FRAMES_1);
+  const frames2 = new Array(TOTAL_FRAMES_2);
+  let loaded = 0;
+  const totalToLoad = REVERSE_SCENE2 ? TOTAL_FRAMES_1 : (TOTAL_FRAMES_1 + TOTAL_FRAMES_2);
+
+  function onFrameLoad() {
+    loaded++;
+    const pct = 10 + (loaded / totalToLoad) * 88;
+    loadingFill.style.width = pct + '%';
+    if (loaded >= totalToLoad) finishLoading();
+  }
+
+  // Pré-carrega cena 1
+  for (let i = 0; i < TOTAL_FRAMES_1; i++) {
+    const img = new Image();
+    img.onload  = onFrameLoad;
+    img.onerror = onFrameLoad; // continua mesmo se um frame falhar
+    img.src = FRAMES_1_DIR + FRAMES_1_BASE + (i + 1) + FRAMES_1_EXT;
+    frames1[i] = img;
+  }
+
+  // Pré-carrega cena 2
+  if (REVERSE_SCENE2) {
+    // Reutiliza os mesmos objetos Image (já em cache)
+    for (let i = 0; i < TOTAL_FRAMES_1; i++) {
+      frames2[i] = frames1[TOTAL_FRAMES_1 - 1 - i];
+    }
+    // Como não há novas imagens para carregar, simula os eventos
+    setTimeout(() => {
+      for (let i = 0; i < TOTAL_FRAMES_1; i++) onFrameLoad();
+    }, 0);
+  } else {
+    for (let i = 0; i < TOTAL_FRAMES_2; i++) {
+      const img = new Image();
+      img.onload  = onFrameLoad;
+      img.onerror = onFrameLoad;
+      img.src = FRAMES_2_DIR + FRAMES_2_BASE + (i + 1) + FRAMES_2_EXT;
+      frames2[i] = img;
+    }
+  }
+
+  // Fallback: se não carregar em 5s, inicia mesmo assim
+  setTimeout(() => {
+    if (loaded < totalToLoad) finishLoading();
+  }, 5000);
+
+  // ─── CANVAS RENDERER ──────────────────────────────────────
+  // Desenha um frame específico no canvas com object-fit:cover
+
+  function drawFrame(canvas, ctx, img) {
+    if (!img || !img.complete || !img.naturalWidth) return;
+
+    const cw = canvas.width;
+    const ch = canvas.height;
+    const iw = img.naturalWidth;
+    const ih = img.naturalHeight;
+
+    // object-fit: cover
+    const scale = Math.max(cw / iw, ch / ih);
+    const dw = iw * scale;
+    const dh = ih * scale;
+    const dx = (cw - dw) / 2;
+    const dy = (ch - dh) / 2;
+
+    ctx.clearRect(0, 0, cw, ch);
+    ctx.drawImage(img, dx, dy, dw, dh);
+  }
+
+  // ─── RESIZE HANDLER ───────────────────────────────────────
+  function resizeCanvas(canvas) {
+    canvas.width  = canvas.offsetWidth  * (window.devicePixelRatio || 1);
+    canvas.height = canvas.offsetHeight * (window.devicePixelRatio || 1);
+  }
+
+  // ─── CRIA ENGINE DE FRAME SEQUENCE ────────────────────────
+  // progress: 0→1, mapeia para os frames disponíveis
+  // Usa lerp suave via rAF para transições entre frames
+
+  function createFrameEngine(canvas, frameList) {
+    const ctx    = canvas.getContext('2d');
+    let targetProgress = 0;
+    let currentProgress = 0;
+    let rafId = null;
+    let running = false;
+    let lastFrameIndex = -1;
+
+    resizeCanvas(canvas);
+
+    // Desenha o frame inicial (frame 0)
+    drawFrame(canvas, ctx, frameList[0]);
+
+    function getFrameIndex(p) {
+      return Math.min(
+        Math.floor(p * (frameList.length - 1) + 0.5),
+        frameList.length - 1
+      );
+    }
+
+    function loop() {
+      if (!running) return;
+
+      // Lerp suave para transição fluida
+      const dist = targetProgress - currentProgress;
+      if (Math.abs(dist) > 0.0001) {
+        currentProgress += dist * 0.22;
+      } else {
+        currentProgress = targetProgress;
+      }
+
+      const idx = getFrameIndex(currentProgress);
+      if (idx !== lastFrameIndex) {
+        drawFrame(canvas, ctx, frameList[idx]);
+        lastFrameIndex = idx;
+      }
+
+      rafId = requestAnimationFrame(loop);
+    }
+
+    window.addEventListener('resize', () => {
+      resizeCanvas(canvas);
+      // Redesenha o frame atual após resize
+      drawFrame(canvas, ctx, frameList[getFrameIndex(currentProgress)]);
+    });
+
+    return {
+      start() {
+        if (running) return;
+        running = true;
+        loop();
+      },
+      stop() {
+        running = false;
+        cancelAnimationFrame(rafId);
+      },
+      setProgress(p) {
+        targetProgress = Math.max(0, Math.min(1, p));
+      },
+      // Snap imediato sem lerp (usado no init)
+      snapProgress(p) {
+        targetProgress = currentProgress = Math.max(0, Math.min(1, p));
+        const idx = getFrameIndex(currentProgress);
+        drawFrame(canvas, ctx, frameList[idx]);
+        lastFrameIndex = idx;
+      }
+    };
+  }
+
+  // ─── INICIALIZA EXPERIÊNCIA ────────────────────────────────
+  function initExperience() {
+
+    // ── Custom Cursor ──────────────────────────────────────
+    if (window.matchMedia('(pointer: fine)').matches) {
+      const cursor     = document.getElementById('cursor');
+      const cursorRing = document.getElementById('cursor-ring');
+
+      document.addEventListener('mousemove', (e) => {
+        cursor.style.left     = e.clientX + 'px';
+        cursor.style.top      = e.clientY + 'px';
+        cursorRing.style.left = e.clientX + 'px';
+        cursorRing.style.top  = e.clientY + 'px';
+      });
+
+      document.querySelectorAll('a, button').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+          cursor.style.width  = '20px';
+          cursor.style.height = '20px';
+          cursorRing.style.width  = '56px';
+          cursorRing.style.height = '56px';
+          cursorRing.style.opacity = '0.3';
+        });
+        el.addEventListener('mouseleave', () => {
+          cursor.style.width  = '10px';
+          cursor.style.height = '10px';
+          cursorRing.style.width  = '36px';
+          cursorRing.style.height = '36px';
+          cursorRing.style.opacity = '0.5';
+        });
+      });
+    }
+
+    // ── Progress Bar ──────────────────────────────────────
+    const progressBar = document.getElementById('progress-bar');
+    window.addEventListener('scroll', () => {
+      const scrolled  = window.scrollY;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      progressBar.style.width = (scrolled / maxScroll * 100) + '%';
+    }, { passive: true });
+
+    // ── Hero entrance ──────────────────────────────────────
+    const heroTl = gsap.timeline({ delay: 0.3 });
+    heroTl
+      .to('#hero-eyebrow', { opacity: 1, y: 0, duration: 1,   ease: 'power3.out' })
+      .to('#hero-names',   { opacity: 1, y: 0, duration: 1.2, ease: 'power3.out' }, '-=0.6')
+      .to('#hero-divider', { opacity: 1, duration: 0.8 }, '-=0.4')
+      .to('#hero-tagline', { opacity: 1, y: 0, duration: 1,   ease: 'power3.out' }, '-=0.5')
+      .to('#hero-cta',     { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, '-=0.4');
+
+    // ── SCROLL SPACE ───────────────────────────────────────
+    // Cada cena tem 1.5 viewports de espaço de scroll para ser mais ágil
+    const V_SCRUB_PX = window.innerHeight * 1.5;
+
+    // Define o height real das seções de frame (não as sticky internas)
+    // A seção precisa ter height = 100vh (viewport) + V_SCRUB_PX
+    const scene1 = document.getElementById('frame-scene-1');
+    const scene2 = document.getElementById('frame-scene-2');
+    scene1.style.height = (window.innerHeight + V_SCRUB_PX) + 'px';
+    scene2.style.height = (window.innerHeight + V_SCRUB_PX) + 'px';
+
+    window.addEventListener('resize', () => {
+      const newScrub = window.innerHeight * 1.5;
+      scene1.style.height = (window.innerHeight + newScrub) + 'px';
+      scene2.style.height = (window.innerHeight + newScrub) + 'px';
+      ScrollTrigger.refresh();
+    });
+
+    // ── FRAME ENGINES ─────────────────────────────────────
+    const canvas1 = document.getElementById('canvas1');
+    const canvas2 = document.getElementById('canvas2');
+
+    const engine1 = createFrameEngine(canvas1, frames1);
+    const engine2 = createFrameEngine(canvas2, frames2);
+    engine1.start();
+    engine2.start();
+
+    // ── SCROLLTRIGGER – CENA 1 ────────────────────────────
+    // Mantemos o loop ativo e usamos um proxy Tween com scrub
+    // para suavizar a atualização do progresso do frame.
+    const scene1Progress = { progress: 0 };
+    gsap.to(scene1Progress, {
+      progress: 1,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '#frame-scene-1',
+        start: 'top top',
+        end: '+=' + V_SCRUB_PX,
+        scrub: 0.08,
+      },
+      onUpdate() { engine1.setProgress(scene1Progress.progress); }
+    });
+
+    // ── OVERLAY CONTENT synced com scroll ─────────────────
+    const overlayTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '#frame-scene-1',
+        start: 'top top',
+        end: '+=' + V_SCRUB_PX,
+        scrub: 1.5,
+      }
+    });
+
+    overlayTl
+      .to('#ov-eyebrow', { opacity: 1, y: 0, duration: 0.15, ease: 'power2.out' }, 0.08)
+      .to('#ov-names',   { opacity: 1, y: 0, duration: 0.20, ease: 'power2.out' }, 0.14)
+      .to('#ov-divider', { opacity: 1, duration: 0.15 }, 0.22)
+      .to('#ov-tagline', { opacity: 1, y: 0, duration: 0.18, ease: 'power2.out' }, 0.27)
+      .to('#ov-details', { opacity: 1, y: 0, duration: 0.18, ease: 'power2.out' }, 0.33)
+      .to(
+        ['#ov-eyebrow','#ov-names','#ov-divider','#ov-tagline','#ov-details'],
+        { opacity: 0, y: -15, stagger: 0.02, duration: 0.15, ease: 'power2.in' },
+        0.78
+      );
+
+    // ── SCROLLTRIGGER – CENA 2 ────────────────────────────
+    const scene2Progress = { progress: 0 };
+    gsap.to(scene2Progress, {
+      progress: 1,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '#frame-scene-2',
+        start: 'top top',
+        end: '+=' + V_SCRUB_PX,
+        scrub: 0.08,
+      },
+      onUpdate() { engine2.setProgress(scene2Progress.progress); }
+    });
+
+    // ── OVERLAY CENA 2 ─────────────────────────────────────
+    const scene2Tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '#frame-scene-2',
+        start: 'top top',
+        end: '+=' + V_SCRUB_PX,
+        scrub: 1,
+      }
+    });
+
+    scene2Tl
+      .to('#scene2-text', { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }, 0.15);
+
+    // ── Details section ────────────────────────────────────
+    ['#db1', '#db2', '#db3'].forEach((sel, i) => {
+      gsap.to(sel, {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '#details',
+          start: 'top 75%',
+          toggleActions: 'play none none none',
+        },
+        delay: i * 0.18
+      });
+    });
+
+    // ── Parallax hero bg text ──────────────────────────────
+    gsap.to('.hero-bg-text', {
+      yPercent: -30,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '#hero',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 2,
+      }
+    });
+
+    // ── Generic fade-in-up via IntersectionObserver ────────
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
+
+    ScrollTrigger.refresh();
+  }
+
+  // ─── Keyboard accessibility ──────────────────────────────
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Tab') document.body.classList.add('keyboard-nav');
+  });
+
+})();
+</script>
+</body>
+</html>
