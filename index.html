@@ -273,7 +273,7 @@
 
     /* ─── OVERLAY CONTENT (over frame scene 1) ───────────────── */
     #overlay-content {
-      position: absolute;
+      position: fixed;
       inset: 0;
       z-index: 5;
       display: flex;
@@ -1641,12 +1641,7 @@
       .to('#ov-names',   { opacity: 1, y: 0, duration: 0.20, ease: 'power2.out' }, 0.14)
       .to('#ov-divider', { opacity: 1, duration: 0.15 }, 0.22)
       .to('#ov-tagline', { opacity: 1, y: 0, duration: 0.18, ease: 'power2.out' }, 0.27)
-      .to('#ov-details', { opacity: 1, y: 0, duration: 0.18, ease: 'power2.out' }, 0.33)
-      .to(
-        ['#ov-eyebrow','#ov-names','#ov-divider','#ov-tagline','#ov-details'],
-        { opacity: 0, y: -15, stagger: 0.02, duration: 0.15, ease: 'power2.in' },
-        0.78
-      );
+      .to('#ov-details', { opacity: 1, y: 0, duration: 0.18, ease: 'power2.out' }, 0.33);
 
     // ── SCROLLTRIGGER – CENA 2 ────────────────────────────
     const scene2Progress = { progress: 0 };
