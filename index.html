@@ -1573,6 +1573,12 @@
       });
     }
 
+    function isMobileScreen() {
+      return window.matchMedia('(pointer: coarse), (max-width: 768px)').matches;
+    }
+
+    let isMobileDevice = isMobileScreen();
+
     // ── Progress Bar ──────────────────────────────────────
     const progressBar = document.getElementById('progress-bar');
     window.addEventListener('scroll', () => {
@@ -1590,8 +1596,6 @@
       .to('#hero-tagline', { opacity: 1, y: 0, duration: 1,   ease: 'power3.out' }, '-=0.5')
       .to('#hero-cta',     { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, '-=0.4');
 
-    const isMobileDevice = window.matchMedia('(pointer: coarse), (max-width: 768px)').matches;
-
     // ── SCROLL SPACE ───────────────────────────────────────
     // Cada cena tem menos espaço em mobile para reduzir carga
     const V_SCRUB_PX = window.innerHeight * (isMobileDevice ? 1 : 1.5);
@@ -1604,6 +1608,7 @@
     scene2.style.height = (window.innerHeight + V_SCRUB_PX) + 'px';
 
     window.addEventListener('resize', () => {
+      isMobileDevice = isMobileScreen();
       const newScrub = window.innerHeight * (isMobileDevice ? 1 : 1.5);
       scene1.style.height = (window.innerHeight + newScrub) + 'px';
       scene2.style.height = (window.innerHeight + newScrub) + 'px';
@@ -1630,7 +1635,8 @@
         trigger: '#frame-scene-1',
         start: 'top top',
         end: '+=' + V_SCRUB_PX,
-        scrub: isMobileDevice ? 0.2 : 0.08,
+        scrub: isMobileDevice ? true : 0.08,
+        invalidateOnRefresh: true,
       },
       onUpdate() { engine1.setProgress(scene1Progress.progress); }
     });
@@ -1641,7 +1647,8 @@
         trigger: '#frame-scene-1',
         start: 'top top',
         end: '+=' + V_SCRUB_PX,
-        scrub: isMobileDevice ? 0.4 : 1.5,
+        scrub: isMobileDevice ? true : 1.5,
+        invalidateOnRefresh: true,
       }
     });
 
@@ -1661,7 +1668,8 @@
         trigger: '#frame-scene-2',
         start: 'top top',
         end: '+=' + V_SCRUB_PX,
-        scrub: isMobileDevice ? 0.2 : 0.08,
+        scrub: isMobileDevice ? true : 0.08,
+        invalidateOnRefresh: true,
       },
       onUpdate() { engine2.setProgress(scene2Progress.progress); }
     });
@@ -1672,7 +1680,8 @@
         trigger: '#frame-scene-2',
         start: 'top top',
         end: '+=' + V_SCRUB_PX,
-        scrub: isMobileDevice ? 0.4 : 1,
+        scrub: isMobileDevice ? true : 1,
+        invalidateOnRefresh: true,
       }
     });
 
