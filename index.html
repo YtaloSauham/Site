@@ -40,6 +40,7 @@
       font-size: clamp(16px, 1.2vw, 20px);
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
+      cursor: none;
     }
 
     /* Grain overlay */
@@ -1015,7 +1016,7 @@
 <!-- Navigation -->
 <nav>
   <div class="nav-monogram">Y & A</div>
-  <div class="nav-date">12 · Julho · 2025</div>
+  <div class="nav-date">12 · Julho · 2026</div>
 </nav>
 
 <!-- ═══════════════════════════════════════════════════════════ -->
@@ -1055,7 +1056,7 @@
     <!-- Overlay central com texto -->
     <div id="overlay-content">
       <div class="overlay-inner">
-        <div class="overlay-eyebrow" id="ov-eyebrow">12 de Julho de 2025</div>
+        <div class="overlay-eyebrow" id="ov-eyebrow">12 de Julho de 2026</div>
         <div class="overlay-names" id="ov-names">
           Ytalo <span style="color:var(--olive)">&</span> Ariane
         </div>
@@ -1123,7 +1124,7 @@
       </div>
       <div class="detail-label">Cerimônia</div>
       <div class="detail-value">Sábado, 12 de Julho</div>
-      <div class="detail-sub">2025 · às 18h00</div>
+      <div class="detail-sub">2026 · às 18h00</div>
     </div>
     <div class="details-divider-v"></div>
     <div class="detail-block" id="db2">
@@ -1471,13 +1472,14 @@
   // progress: 0→1, mapeia para os frames disponíveis
   // Usa lerp suave via rAF para transições entre frames
 
-  function createFrameEngine(canvas, frameList) {
+  function createFrameEngine(canvas, frameList, { smooth = true } = {}) {
     const ctx    = canvas.getContext('2d');
     let targetProgress = 0;
     let currentProgress = 0;
     let rafId = null;
     let running = false;
     let lastFrameIndex = -1;
+    const useSmooth = smooth;
 
     resizeCanvas(canvas);
 
@@ -1519,7 +1521,7 @@
 
     return {
       start() {
-        if (running) return;
+        if (!useSmooth || running) return;
         running = true;
         loop();
       },
@@ -1529,6 +1531,14 @@
       },
       setProgress(p) {
         targetProgress = Math.max(0, Math.min(1, p));
+        if (!running) {
+          currentProgress = targetProgress;
+          const idx = getFrameIndex(currentProgress);
+          if (idx !== lastFrameIndex) {
+            drawFrame(canvas, ctx, frameList[idx]);
+            lastFrameIndex = idx;
+          }
+        }
       },
       // Snap imediato sem lerp (usado no init)
       snapProgress(p) {
@@ -1619,10 +1629,12 @@
     const canvas1 = document.getElementById('canvas1');
     const canvas2 = document.getElementById('canvas2');
 
-    const engine1 = createFrameEngine(canvas1, frames1);
-    const engine2 = createFrameEngine(canvas2, frames2);
-    engine1.start();
-    engine2.start();
+    const engine1 = createFrameEngine(canvas1, frames1, { smooth: !isMobileDevice });
+    const engine2 = createFrameEngine(canvas2, frames2, { smooth: !isMobileDevice });
+    if (!isMobileDevice) {
+      engine1.start();
+      engine2.start();
+    }
 
     // ── SCROLLTRIGGER – CENA 1 ────────────────────────────
     // Mantemos o loop ativo e usamos um proxy Tween com scrub
@@ -1635,7 +1647,7 @@
         trigger: '#frame-scene-1',
         start: 'top top',
         end: '+=' + V_SCRUB_PX,
-        scrub: isMobileDevice ? true : 0.08,
+        scrub: isMobileDevice ? 0 : 0.08,
         invalidateOnRefresh: true,
       },
       onUpdate() { engine1.setProgress(scene1Progress.progress); }
@@ -1647,7 +1659,7 @@
         trigger: '#frame-scene-1',
         start: 'top top',
         end: '+=' + V_SCRUB_PX,
-        scrub: isMobileDevice ? true : 1.5,
+        scrub: isMobileDevice ? 0 : 1.5,
         invalidateOnRefresh: true,
       }
     });
@@ -1668,7 +1680,7 @@
         trigger: '#frame-scene-2',
         start: 'top top',
         end: '+=' + V_SCRUB_PX,
-        scrub: isMobileDevice ? true : 0.08,
+        scrub: isMobileDevice ? 0 : 0.08,
         invalidateOnRefresh: true,
       },
       onUpdate() { engine2.setProgress(scene2Progress.progress); }
@@ -1680,7 +1692,7 @@
         trigger: '#frame-scene-2',
         start: 'top top',
         end: '+=' + V_SCRUB_PX,
-        scrub: isMobileDevice ? true : 1,
+        scrub: isMobileDevice ? 0 : 1,
         invalidateOnRefresh: true,
       }
     });
