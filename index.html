@@ -69,18 +69,17 @@
       z-index: 10000;
       transform: translate(-50%, -50%);
       transition: transform 0.1s, width 0.3s var(--ease-silk), height 0.3s var(--ease-silk), background 0.3s;
-      mix-blend-mode: multiply;
     }
     .cursor-ring {
       position: fixed;
       width: 36px; height: 36px;
-      border: 1px solid var(--olive);
+      border: 1px solid var(--olive-lt);
       border-radius: 50%;
       pointer-events: none;
       z-index: 9998;
       transform: translate(-50%, -50%);
       transition: transform 0.15s var(--ease-silk), width 0.4s var(--ease-silk), height 0.4s var(--ease-silk), opacity 0.4s;
-      opacity: 0.5;
+      opacity: 0.65;
     }
 
     /* ─── Nav ────────────────────────────────────────────────── */
@@ -97,22 +96,23 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(to bottom, rgba(232,226,214,0.85) 0%, transparent 100%);
+      background: linear-gradient(to bottom, rgba(255,255,255,0.10) 0%, transparent 100%);
       pointer-events: none;
     }
     .nav-monogram {
       font-family: var(--script);
       font-size: 2rem;
-      color: var(--olive);
+      color: var(--white);
       letter-spacing: 0.02em;
       position: relative;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     }
     .nav-date {
       font-family: var(--body);
       font-size: 0.75rem;
       letter-spacing: 0.25em;
       text-transform: uppercase;
-      color: var(--ink-lt);
+      color: rgba(255, 255, 255, 0.75);
       position: relative;
     }
 
@@ -136,18 +136,57 @@
 
     /* ─── HERO SECTION ───────────────────────────────────────── */
     #hero {
+      position: relative;
       height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: var(--bg);
+      overflow: hidden;
+      background: var(--ink);
+    }
+
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(16,14,12,0.35), rgba(16,14,12,0.82));
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .hero-video video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: auto;
+      height: 120%;
+      min-width: 100%;
+      min-height: 100%;
+      transform: translate(-50%, -50%);
+      object-fit: cover;
+      filter: brightness(0.42) saturate(1.15);
+    }
+
+    .hero-video::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top, rgba(201,168,76,0.08), transparent 40%), linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.45));
+      pointer-events: none;
     }
 
     .hero-bg-text {
       position: absolute;
       font-family: var(--script);
       font-size: clamp(80px, 14vw, 200px);
-      color: rgba(90, 98, 66, 0.06);
+      color: rgba(255, 255, 255, 0.07);
       white-space: nowrap;
       user-select: none;
       pointer-events: none;
@@ -161,6 +200,8 @@
       flex-direction: column;
       align-items: center;
       gap: 16px;
+      color: var(--white);
+      text-shadow: 0 18px 30px rgba(0, 0, 0, 0.35);
     }
 
     .hero-eyebrow {
@@ -168,7 +209,7 @@
       font-size: 0.7rem;
       letter-spacing: 0.4em;
       text-transform: uppercase;
-      color: var(--olive);
+      color: rgba(255, 255, 255, 0.92);
       opacity: 0;
       transform: translateY(20px);
     }
@@ -176,13 +217,49 @@
     .hero-names {
       font-family: var(--script);
       font-size: clamp(52px, 8vw, 120px);
-      color: var(--ink);
+      color: var(--white);
       line-height: 1;
       opacity: 0;
       transform: translateY(30px);
     }
 
-    .hero-ampersand { color: var(--olive); }
+    .hero-tagline {
+      font-family: var(--body);
+      font-style: italic;
+      font-size: clamp(1rem, 2vw, 1.35rem);
+      color: rgba(255, 255, 255, 0.85);
+      letter-spacing: 0.05em;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .hero-cta span {
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .hero-eyebrow {
+      font-family: var(--body);
+      font-size: 0.7rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.78);
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .hero-names {
+      font-family: var(--script);
+      font-size: clamp(52px, 8vw, 120px);
+      color: var(--white);
+      line-height: 1;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .hero-ampersand { color: var(--gold); }
 
     .hero-divider {
       width: 80px;
@@ -195,7 +272,7 @@
       font-family: var(--body);
       font-style: italic;
       font-size: clamp(1rem, 2vw, 1.35rem);
-      color: var(--ink-lt);
+      color: rgba(255, 255, 255, 0.85);
       letter-spacing: 0.05em;
       opacity: 0;
       transform: translateY(20px);
@@ -215,13 +292,13 @@
       font-size: 0.65rem;
       letter-spacing: 0.35em;
       text-transform: uppercase;
-      color: var(--olive-lt);
+      color: var(--white);
     }
 
     .scroll-indicator { display: flex; flex-direction: column; align-items: center; gap: 6px; }
     .scroll-indicator-line {
       width: 1px; height: 50px;
-      background: linear-gradient(to bottom, transparent, var(--olive));
+      background: linear-gradient(to bottom, transparent, var(--white));
       animation: scrollPulse 2s ease-in-out infinite;
     }
 
@@ -847,6 +924,11 @@
 <!-- HERO -->
 <!-- ═══════════════════════════════════════════════════════════ -->
  <section id="hero" class="section">
+  <div class="hero-video">
+    <video autoplay muted loop playsinline>
+      <source src="image/Ocean_sunset_background.mp4" type="video/mp4" />
+    </video>
+  </div>
   <div class="hero-bg-text" style="top:50%;left:50%;transform:translate(-50%,-50%)">Amor Eterno</div>
   <div class="hero-content">
     <div class="hero-eyebrow" id="hero-eyebrow">Convidam para celebrar</div>
