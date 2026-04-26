@@ -19,7 +19,7 @@
       --gold:      #C9A84C; /* Dourado: progress bar, hero divider, footer monogram, dress dividers, icons */
       --gold-lt:   #E8C97A; /* Dourado claro: details divider, dress palette, rsvp deadline */
       --cream:     #F5F0E8; /* Creme: dress-code background, card hover */
-      --ink:       #2C2A26; /* Texto principal: body, hero names, section titles, dress titles */
+      --ink:       #282c26; /* Texto principal: body, hero names, section titles, dress titles */
       --ink-lt:    #6B6557; /* Texto secundário: hero tagline, details copy, dress descriptions */
       --white:     #FDFAF5; /* Branco: rsvp text, footer text */
 
@@ -149,7 +149,11 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, rgba(16,14,12,0.35), rgba(16,14,12,0.82));
+      background: linear-gradient(
+  180deg,
+  rgba(16, 14, 12, 0.2) 0%,
+  rgba(214, 203, 183, 0.35) 100%
+);
       pointer-events: none;
       z-index: 1;
     }
