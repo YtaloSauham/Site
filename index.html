@@ -221,12 +221,14 @@
     .cover-scroll-hint {
       position: absolute;
       bottom: 22px;
-      left: 50%;
-      transform: translateX(-50%);
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+      width: max-content;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 7px;
+      gap: 6px;
       z-index: 10;
       opacity: 0.55;
       cursor: pointer;
@@ -585,12 +587,18 @@
 
     /* ─── RESPONSIVE ─────── */
     @media (max-width: 700px) {
-      #cover { padding: 20px; }
+      #cover { padding: 30px 20px 20px; }
       .cover-frame { padding: 32px 24px 44px; }
-      .cover-flower-wrap { width: 120px; height: 120px; }
+      .cover-flower-wrap { width: clamp(180px, 40vw, 240px); height: clamp(180px, 40vw, 240px); }
       .cover-frame::before, .cover-frame::after,
       .cover-frame-inner::before, .cover-frame-inner::after { width: 36px; height: 36px; }
-      nav { padding: 16px 20px; }
+      nav { padding: 26px 20px 18px; }
+      .cover-scroll-hint {
+        left: 50%;
+        right: auto;
+        width: auto;
+        transform: translateX(-50%);
+      }
       #details { padding: 72px 20px; }
       .details-grid { grid-template-columns: 1fr; }
       .details-divider-v { display: none; }
@@ -666,6 +674,7 @@
     <div class="cover-rule cover-rule-bot"></div>
 
     <!-- Scroll hint -->
+
     <div class="cover-scroll-hint" onclick="document.getElementById('interlude').scrollIntoView({behavior:'smooth'})">
       <span>Descubra</span>
       <div class="scroll-line"></div>
