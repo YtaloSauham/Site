@@ -20,11 +20,11 @@
     }
 
     :root {
-      --bg:         #F3EBDD; /* Fundo principal: champagne quente */
+      --bg:         #F6F4E9; /* Fundo principal: creme suave */
   --bg2:        #DDD3C4; /* Fundo secundário: areia sofisticada */
 
   /* VERDES */
-  --olive:      #4A5A46; /* Verde principal: oliva profundo elegante */
+  --olive:      #4A5535; /* Verde principal: oliva profundo elegante */
   --olive-lt:   #6E7D69; /* Hover e elementos suaves */
   --olive-soft: #A3AE98; /* Tons secundários e backgrounds suaves */
 
@@ -101,7 +101,7 @@
     #cover {
       width: 100vw;
       height: 100vh;
-      background: #4A5535;
+      background: var(--olive);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -114,7 +114,7 @@
       width: 100%;
       height: 100%;
       max-width: 100%;
-      background: #EDEADB;
+      background: var(--bg);
       border: 3px solid #4A5535;
       position: relative;
       display: flex;
@@ -169,7 +169,7 @@
       font-size: clamp(3rem, 8.5vw, 7.5rem);
       font-weight: 400;
       letter-spacing: 0.14em;
-      color: #4A5535;
+      color: var(--olive);
       line-height: 1;
       text-transform: uppercase;
       display: block;
@@ -181,7 +181,7 @@
       font-size: clamp(3rem, 8.5vw, 7.5rem);
       font-weight: 400;
       letter-spacing: 0.14em;
-      color: #4A5535;
+      color: var(--olive);
       line-height: 1;
       text-transform: uppercase;
       display: flex;
@@ -193,7 +193,7 @@
     .cover-ampersand {
       font-family: var(--script);
       font-size: clamp(2.6rem, 7vw, 6rem);
-      color: #4A5535;
+      color: var(--olive);
       line-height: 1;
       display: inline-block;
     }
@@ -202,7 +202,7 @@
     .cover-rule {
       width: 100%;
       height: 1px;
-      background: #4A5535;
+      background: var(--olive);
       opacity: 0.55;
       z-index: 2;
       animation: fadeUp 0.8s var(--ease-silk) 1.3s both;
@@ -215,7 +215,7 @@
     .cover-subtitle {
       font-family: 'Pinyon Script', var(--script);
       font-size: clamp(1.25rem, 2.8vw, 2.1rem);
-      color: #4A5535;
+      color: var(--olive);
       line-height: 1.55;
       text-align: center;
       z-index: 2;
@@ -243,12 +243,12 @@
       font-size: 0.55rem;
       letter-spacing: 0.38em;
       text-transform: uppercase;
-      color: #4A5535;
+      color: var(--olive);
     }
     .scroll-line {
       width: 1px;
       height: 34px;
-      background: linear-gradient(to bottom, #4A5535, transparent);
+      background: linear-gradient(to bottom, var(--olive), transparent);
       animation: scrollPulse 2.2s ease-in-out infinite;
     }
     @keyframes scrollPulse {
