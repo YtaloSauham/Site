@@ -54,7 +54,6 @@
       font-family: var(--body);
       font-size: clamp(16px, 1.2vw, 20px);
       overflow-x: hidden;
-       cursor: none;
       -webkit-font-smoothing: antialiased;
     }
 
@@ -82,6 +81,7 @@
       z-index: 10000;
       transform: translate(-50%, -50%);
       transition: transform 0.1s, width 0.3s var(--ease-silk), height 0.3s var(--ease-silk), background 0.3s;
+      display: none;
     }
     .cursor-ring {
       position: fixed;
@@ -93,6 +93,7 @@
       transform: translate(-50%, -50%);
       transition: transform 0.15s var(--ease-silk), width 0.4s var(--ease-silk), height 0.4s var(--ease-silk), opacity 0.4s;
       opacity: 0.65;
+      display: none;
     }
 
     /* ═══════════════════════════════════════════
@@ -424,6 +425,13 @@
       color: var(--ink-lt);
     }
 
+    .detail-sub a {
+      color: var(--gold);
+      text-decoration: inherit;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s;
+    }
+
     /* ─── DRESS CODE ─────────── */
     #dress-code {
       background: var(--cream);
@@ -673,7 +681,7 @@
     <!-- Subtitle -->
     <div class="cover-subtitle">
       Convidam você para celebrar o seu<br/>
-      casamento em 19 de Junho de 2026
+      casamento
     </div>
 
     <!-- Bottom rule -->
@@ -713,7 +721,7 @@
   <div class="details-intro fade-in-up">
     <span class="section-label">Informações</span>
     <h2 class="details-title">Tudo o que você precisa saber</h2>
-    <p class="details-copy">Horário, local e recepção organizados para que você aproveite cada momento do nosso grande dia.</p>
+    <p class="details-copy">Detalhes da recepção e do jantar que acontecerão após nosso casamento civil.</p>
   </div>
   <div class="details-grid">
     <div class="detail-block" id="db1">
@@ -723,9 +731,20 @@
           <line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
         </svg>
       </div>
-      <div class="detail-label">Cerimônia</div>
-      <div class="detail-value">Sexta-feira, 19 de Junho</div>
-      <div class="detail-sub">2026 · às 18h00</div>
+      <div class="detail-label">Data</div>
+      <div class="detail-value">Sexta-feira, 19 de Junho de 2026</div>
+      <div class="detail-sub">Ás 19h00</div>
+    </div>
+     <div class="details-divider-v"></div>
+    <div class="detail-block" id="db3">
+      <div class="detail-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+      </div>
+      <div class="detail-label">Recepção</div>
+      <div class="detail-value">Restaurante Numar</div>
+      <div class="detail-sub">Espaço reservado</div>
     </div>
     <div class="details-divider-v"></div>
     <div class="detail-block" id="db2">
@@ -735,21 +754,14 @@
           <circle cx="12" cy="10" r="3"/>
         </svg>
       </div>
-      <div class="detail-label">Local</div>
-      <div class="detail-value">Igreja São Francisco</div>
-      <div class="detail-sub">São Luís, Maranhão</div>
+     <div class="detail-label">Endereço</div>
+      <div class="detail-value">Champs Mall</div>
+      <div class="detail-sub">Av. Ivan Loureiro, 04 - Ponta D'areia</div>
+      <div class="detail-sub">
+        <a href="https://www.google.com/maps/place/Numar/@-2.4991278,-44.311619,17z/data=!3m1!4b1!4m6!3m5!1s0x7f68d00789ec7a9:0x91413b25a3e33eb5!8m2!3d-2.4991278!4d-44.311619!16s%2Fg%2F11y7t_yr50?entry=ttu&g_ep=EgoyMDI2MDUwNi4wIKXMDSoASAFQAw%3D%3D">
+          Saiba com chegar</a></div>
     </div>
-    <div class="details-divider-v"></div>
-    <div class="detail-block" id="db3">
-      <div class="detail-icon">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-        </svg>
-      </div>
-      <div class="detail-label">Recepção</div>
-      <div class="detail-value">Espaço Villa Garden</div>
-      <div class="detail-sub">A partir das 20h00</div>
-    </div>
+   
   </div>
 </section>
 
@@ -865,6 +877,10 @@ function () {
   if (window.matchMedia('(pointer: fine)').matches) {
       const cursor     = document.getElementById('cursor');
       const cursorRing = document.getElementById('cursor-ring');
+
+      cursor.style.display = 'block';
+      cursorRing.style.display = 'block';
+      document.body.style.cursor = 'none';
 
       document.addEventListener('mousemove', (e) => {
         cursor.style.left     = e.clientX + 'px';
