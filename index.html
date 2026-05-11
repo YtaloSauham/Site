@@ -633,53 +633,128 @@
     .modal {
       display: none;
       position: fixed;
-      z-index: 1000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.5);
+      z-index: 10010;
+      inset: 0;
+      background: rgba(17, 16, 14, 0.55);
+      backdrop-filter: blur(4px);
       justify-content: center;
       align-items: center;
+      padding: 20px;
+      cursor: default;
     }
     .modal-content {
-      background: var(--bg);
-      padding: 40px;
-      border-radius: 8px;
-      max-width: 500px;
-      width: 90%;
+      background: linear-gradient(180deg, rgba(246,244,233,0.98) 0%, rgba(255,255,255,0.99) 100%);
+      padding: 36px 32px;
+      border-radius: 24px;
+      max-width: 520px;
+      width: 100%;
       text-align: center;
       position: relative;
+      box-shadow: 0 24px 80px rgba(47,49,43,0.18);
+      border: 1px solid rgba(74,85,53,0.12);
+    }
+    .modal-content h2 {
+      font-family: var(--script);
+      font-size: clamp(2rem, 3vw, 2.6rem);
+      margin-bottom: 14px;
+      color: var(--olive);
+    }
+    .modal-content label {
+      display: block;
+      font-size: 0.95rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--olive-lt);
+      margin-bottom: 12px;
+    }
+    .modal-content input {
+      width: 100%;
+      padding: 16px 18px;
+      margin-bottom: 18px;
+      border: 1px solid rgba(74,85,53,0.2);
+      border-radius: 14px;
+      background: rgba(255,255,255,0.92);
+      color: var(--ink);
+      font-size: 1rem;
+    }
+    .modal-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 18px;
+    }
+    .modal-button {
+      min-width: 140px;
+      padding: 14px 22px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      transition: transform 0.25s var(--ease-silk), background 0.25s, border-color 0.25s, color 0.25s;
+    }
+    .modal-button:hover {
+      transform: translateY(-2px);
+    }
+    .modal-button.primary {
+      background: var(--olive);
+      color: var(--white);
+      border-color: var(--olive);
+    }
+    .modal-button.secondary {
+      background: transparent;
+      color: var(--olive);
+      border-color: rgba(74,85,53,0.18);
+    }
+    .modal-button.secondary:hover {
+      background: rgba(74,85,53,0.08);
     }
     .close {
       position: absolute;
-      top: 10px;
-      right: 20px;
-      font-size: 28px;
+      top: 14px;
+      right: 18px;
+      font-size: 30px;
+      line-height: 1;
       cursor: pointer;
+      color: var(--olive);
+      transition: color 0.2s;
     }
-    .modal input {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border: 1px solid var(--gold-lt);
-      border-radius: 4px;
+    .close:hover {
+      color: var(--gold);
     }
-    .modal button {
-      background: var(--olive);
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      margin: 10px;
-      cursor: pointer;
-      border-radius: 4px;
+    .modal p {
+      color: var(--ink-lt);
+      line-height: 1.75;
+      margin-top: 0;
     }
-    .modal button:hover {
-      background: var(--olive-lt);
+    .modal-info {
+      margin-top: 0;
+      font-size: 0.95rem;
+      color: var(--olive-lt);
     }
     #message {
-      margin-top: 20px;
-      color: var(--ink);
+      margin-top: 16px;
+      min-height: 24px;
+      color: var(--olive);
+      font-weight: 600;
+      line-height: 1.4;
+      opacity: 0.95;
+    }
+    #message.error {
+      color: #9b2b2b;
+    }
+    @media (max-width: 520px) {
+      .modal-content {
+        padding: 28px 20px;
+      }
+      .modal-actions {
+        flex-direction: column;
+      }
+      .modal-button {
+        width: 100%;
+      }
     }
 
     
@@ -921,12 +996,16 @@
     <div id="step1">
       <label for="guest-name">Digite seu nome completo:</label>
       <input type="text" id="guest-name" placeholder="Nome como na lista de convidados">
-      <button onclick="verifyName()">Verificar</button>
+      <div class="modal-actions">
+        <button class="modal-button primary" onclick="verifyName()">Verificar</button>
+      </div>
     </div>
     <div id="step2" style="display: none;">
-      <p>Olá, <span id="guest-name-display"></span>! Confirme sua presença:</p>
-      <button onclick="confirmPresence('Eu Vou')">Eu Vou</button>
-      <button onclick="confirmPresence('Não Vou')">Não Vou</button>
+      <p class="modal-info">Olá, <span id="guest-name-display"></span>! Confirme sua presença:</p>
+      <div class="modal-actions">
+        <button class="modal-button primary" onclick="confirmPresence('Eu Vou')">Eu Vou</button>
+        <button class="modal-button secondary" onclick="confirmPresence('Não Vou')">Não Vou</button>
+      </div>
     </div>
     <div id="message" style="display: none;"></div>
   </div>
@@ -1016,14 +1095,33 @@ function () {
 
 // RSVP Modal Functions
 function openRSVPModal() {
+  const message = document.getElementById('message');
+  message.style.display = 'none';
+  message.textContent = '';
+  message.classList.remove('error');
+
+  const cursor = document.getElementById('cursor');
+  const cursorRing = document.getElementById('cursor-ring');
+  if (cursor && cursorRing) {
+    cursor.style.display = 'none';
+    cursorRing.style.display = 'none';
+  }
+  document.body.style.cursor = 'default';
+
   document.getElementById('rsvp-modal').style.display = 'flex';
   document.getElementById('step1').style.display = 'block';
   document.getElementById('step2').style.display = 'none';
-  document.getElementById('message').style.display = 'none';
   document.getElementById('guest-name').value = '';
 }
 
 function closeRSVPModal() {
+  const cursor = document.getElementById('cursor');
+  const cursorRing = document.getElementById('cursor-ring');
+  if (window.matchMedia('(pointer: fine)').matches && cursor && cursorRing) {
+    cursor.style.display = 'block';
+    cursorRing.style.display = 'block';
+    document.body.style.cursor = 'none';
+  }
   document.getElementById('rsvp-modal').style.display = 'none';
 }
 
@@ -1035,14 +1133,18 @@ async function verifyName() {
   }
 
   try {
-    const response = await fetch('/convidados');
+    const response = await fetch('./api/convidados');
     const data = await response.json();
     if (data.convidados.includes(name)) {
       document.getElementById('guest-name-display').textContent = name;
       document.getElementById('step1').style.display = 'none';
       document.getElementById('step2').style.display = 'block';
+      const message = document.getElementById('message');
+      message.style.display = 'none';
+      message.textContent = '';
+      message.classList.remove('error');
     } else {
-      showMessage('Nome não encontrado na lista de convidados.');
+      showMessage('Nome não encontrado na lista de convidados.', true);
     }
   } catch (error) {
     showMessage('Erro ao verificar nome. Tente novamente.');
@@ -1052,7 +1154,7 @@ async function verifyName() {
 async function confirmPresence(status) {
   const name = document.getElementById('guest-name').value.trim();
   try {
-    const response = await fetch('/confirmar', {
+    const response = await fetch('./api/confirmar', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ nome: name, status })
@@ -1069,9 +1171,11 @@ async function confirmPresence(status) {
   }
 }
 
-function showMessage(msg) {
-  document.getElementById('message').textContent = msg;
-  document.getElementById('message').style.display = 'block';
+function showMessage(msg, isError = false) {
+  const message = document.getElementById('message');
+  message.textContent = msg;
+  message.style.display = 'block';
+  message.classList.toggle('error', isError);
 }
 </script>
 </body>

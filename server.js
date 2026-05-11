@@ -7,7 +7,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Carregar credenciais da conta de serviço
-const credentialsPath = process.env.SERVICE_ACCOUNT_FILE || 'quixotic-spot-458401-e3-a16c9b4af1fe.json';
+const credentialsPath = process.env.SERVICE_ACCOUNT_FILE;
 const credentials = JSON.parse(fs.readFileSync(credentialsPath, 'utf8'));
 
 // Configurar autenticação
