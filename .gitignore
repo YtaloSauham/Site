@@ -1,0 +1,8 @@
+node_modules/
+.env
+*.env
+.DS_Store
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+quixotic-spot-458401-e3-a16c9b4af1fe.json
