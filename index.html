@@ -1133,7 +1133,7 @@ async function verifyName() {
   }
 
   try {
-    const response = await fetch('/api/convidados');
+    const response = await fetch('/convidados');
     const data = await response.json();
     if (data.convidados.includes(name)) {
       document.getElementById('guest-name-display').textContent = name;
@@ -1154,7 +1154,7 @@ async function verifyName() {
 async function confirmPresence(status) {
   const name = document.getElementById('guest-name').value.trim();
   try {
-    const response = await fetch('/api/confirmar', {
+    const response = await fetch('/confirmar', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ nome: name, status })
