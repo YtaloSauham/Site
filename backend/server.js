@@ -2,8 +2,10 @@ require('dotenv').config();
 const express = require('express');
 const { google } = require('googleapis');
 const fs = require('fs');
-
+const cors =
+  require('cors');
 const app = express();
+app.use(cors());
 const PORT = process.env.PORT || 3000;
 
 // Carregar credenciais da conta de serviço
