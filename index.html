@@ -1133,7 +1133,7 @@ async function verifyName() {
   }
 
   try {
-    const response = await fetch('http://localhost:3000/convidados');
+    const response = await fetch('https://site-j2q0.onrender.com/convidados');
     const data = await response.json();
     if (data.convidados.includes(name)) {
       document.getElementById('guest-name-display').textContent = name;
@@ -1154,7 +1154,7 @@ async function verifyName() {
 async function confirmPresence(status) {
   const name = document.getElementById('guest-name').value.trim();
   try {
-    const response = await fetch('http://localhost:3000/confirmar', {
+    const response = await fetch('https://site-j2q0.onrender.com/confirmar', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ nome: name, status })
