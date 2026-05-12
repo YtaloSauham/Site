@@ -83,15 +83,44 @@ app.post('/confirmar', async (req, res) => {
     }
 
     // Data e hora atual
-    const now = new Date();
-    const dataConfirmacao = now.toLocaleString('pt-BR', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit'
-    });
+   const now = new Date();
+
+const brasilTime =
+  new Date(
+    now.toLocaleString(
+      'en-US',
+      {
+        timeZone:
+          'America/Sao_Paulo'
+      }
+    )
+  );
+
+const dataConfirmacao =
+  brasilTime.toLocaleString(
+    'pt-BR',
+    {
+
+      year:
+        'numeric',
+
+      month:
+        '2-digit',
+
+      day:
+        '2-digit',
+
+      hour:
+        '2-digit',
+
+      minute:
+        '2-digit',
+
+      second:
+        '2-digit'
+
+    }
+  );
 
     // Atualizar Status (coluna C) e Data_Confirmação (coluna D)
     await sheets.spreadsheets.values.update({
