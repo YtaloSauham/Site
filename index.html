@@ -862,7 +862,8 @@
       <div class="detail-value">Sexta-feira, 19 de Junho de 2026</div>
       <div class="detail-sub">Ás 19h</div>
       <div class="detail-sub">
-        <a href="casamento.ics" download>Adicionar ao Google Agenda</a>
+        <a id="calendar-link"
+  class="calendar-button" >Adicionar a Agenda</a>
       </div>
     </div>
      <div class="details-divider-v"></div>
@@ -973,8 +974,8 @@
   <div class="rsvp-inner">
     <div class="rsvp-label fade-in-up">Confirme sua presença</div>
     <div class="rsvp-title fade-in-up">Venha Celebrar</div>
-    <p class="rsvp-sub fade-in-up">Sua presença é o maior presente que poderíamos receber.<br/>Por favor, confirme até 05 de junho de 2026.</p>
-    <div class="rsvp-deadline fade-in-up">Confirmar até · 05 Jun 2026</div>
+    <p class="rsvp-sub fade-in-up">Sua presença é o maior presente que poderíamos receber.<br/>Por favor, confirme até 18 de junho de 2026.</p>
+    <div class="rsvp-deadline fade-in-up">Confirmar até · 18 Jun 2026</div>
     <button class="btn-rsvp fade-in-up" onclick="openRSVPModal()">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
@@ -1221,9 +1222,46 @@ function addToCalendar() {
     `&details=${details}` +
     `&location=${location}`;
 
-  window.open(url, '_blank');
+  return url;
+}
+
+const calendarLink =
+  document.getElementById(
+    'calendar-link'
+  );
+
+const isMobile =
+  /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i
+    .test(
+      navigator.userAgent
+    );
+
+const googleCalendarUrl =
+  addToCalendar();
+
+if(isMobile){
+
+  calendarLink.href =
+    '/casamento.ics';
+
+  calendarLink.setAttribute(
+    'download',
+    ''
+  );
+
+} else {
+
+  calendarLink.href =
+    googleCalendarUrl;
+
+  calendarLink.target =
+    '_blank';
+
+  calendarLink.rel =
+    'noopener noreferrer';
 
 }
+
 </script>
 </body>
 </html>
