@@ -1379,7 +1379,7 @@ async function confirmPresence(status) {
     });
     const data = await response.json();
     if (response.ok) {
-      if(status === 'Eu Vou'){
+      if(status === 'Confirmar'){
         showMessage('Confirmação registrada com sucesso!');
       } else {
         showMessage('Lamentamos que você não possa comparecer, mas agradecemos por nos informar.'); 
