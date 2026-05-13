@@ -1,11 +1,17 @@
 BEGIN:VCALENDAR
 VERSION:2.0
+METHOD:PUBLISH
+
 BEGIN:VEVENT
-SUMMARY:Casamento de Ariane e Ytalo
+
+SUMMARY:Casamento de Ytalo e Ariane
+
 DTSTART:20260619T220000Z
 DTEND:20260620T020000Z
-DESCRIPTION:Estamos ansiosos para celebrar esse momento com você!
+
 LOCATION:São Luís - MA
+
+DESCRIPTION:Estamos ansiosos para celebrar esse momento com você!
 
 BEGIN:VALARM
 TRIGGER:-P1D
@@ -21,3 +27,4 @@ END:VALARM
 
 END:VEVENT
 END:VCALENDAR
+
