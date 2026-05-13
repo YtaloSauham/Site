@@ -861,6 +861,9 @@
       <div class="detail-label">Data</div>
       <div class="detail-value">Sexta-feira, 19 de Junho de 2026</div>
       <div class="detail-sub">Ás 19h</div>
+      <div class="detail-sub">
+        <a href="#" onclick="addToCalendar()">Adicionar ao Google Agenda</a>
+      </div>
     </div>
      <div class="details-divider-v"></div>
     <div class="detail-block" id="db3">
@@ -1181,6 +1184,45 @@ function showMessage(msg, isError = false) {
   message.textContent = msg;
   message.style.display = 'block';
   message.classList.toggle('error', isError);
+}
+
+function addToCalendar() {
+
+  const title =
+    encodeURIComponent(
+      'Casamento Ytalo & Noiva'
+    );
+
+  const details =
+    encodeURIComponent(
+      'Estamos ansiosos para celebrar esse momento com você!'
+    );
+
+  const location =
+    encodeURIComponent(
+      'São Luís - MA'
+    );
+
+  /*
+    FORMATO:
+    YYYYMMDDTHHmmssZ
+  */
+
+ const startDate =
+    '20260619T220000Z';
+
+  const endDate =
+    '20260620T020000Z';
+
+  const url =
+    `https://calendar.google.com/calendar/render?action=TEMPLATE` +
+    `&text=${title}` +
+    `&dates=${startDate}/${endDate}` +
+    `&details=${details}` +
+    `&location=${location}`;
+
+  window.open(url, '_blank');
+
 }
 </script>
 </body>
