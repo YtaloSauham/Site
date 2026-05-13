@@ -41,10 +41,13 @@ app.get('/convidados', async (req, res) => {
     const sheets = google.sheets({ version: 'v4', auth });
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId: SPREADSHEET_ID,
-      range: `${SHEET_NAME}!A:A`, // Coluna Convidados
+      range: `${SHEET_NAME}!A:B`, // Colunas Nome e Apelido
     });
     const values = response.data.values || [];
-    const convidados = values.slice(1).map(row => row[0]).filter(name => name); // Ignorar header
+    const convidados = values.slice(1).map(row => ({
+      nome: row[0] || '',
+      apelido: row[1] || ''
+    })).filter(conv => conv.nome); // Ignorar header e linhas sem nome
     res.json({ convidados });
   } catch (error) {
     console.error('Erro ao obter convidados:', error);
